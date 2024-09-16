@@ -17,6 +17,14 @@ const config = {
         "2xl": "1400px",
       },
     },
+    colors: {
+      'white': '#FFFFFF',
+      'BaseBg': '#252836',
+      'DarkBg': '#1F1D2B',
+      'Light': '#ABBBC2',
+      'Lighter': '#E0E6E9',
+      'primaryOrange': '#EA7C69',
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",

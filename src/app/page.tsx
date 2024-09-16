@@ -12,51 +12,53 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-
-
-
 import { NextPage } from 'next'
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+
+async function getOrders() {
+	const orders = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_API_DOMAIN}/api/orders`);
+  return orders.data;
+}
+
+
 
 interface Props {}
+
+
 
 const Page: NextPage<Props> = ({}) => {
   const { setTheme } = useTheme()
 
+  const { data, error, isLoading } = useQuery({
+      queryKey: ['orders'],  
+      queryFn: getOrders, 
+  });
+
+
+
+  if(isLoading){
+    console.log("wait still loading");
+  }
+
+  if(!isLoading){
+    console.log("heres the data", data)
+  }
+ 
+  {/* <Script
+    id="chatling-embed-script"
+    strategy="afterInteractive"
+    src="https://chatling.ai/js/embed.js"
+    async
+    data-id="8414771916"
+  /> */}
+
+
   return (
-    <main className="flex flex-col bg-slate-200 h-full w-full text-black">
-      <div className="mt-[80px]">
-        <p>This is the form page</p>
-        <div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme("light")}>
-              Light
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
-              Dark
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("system")}>
-              System
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        </div>
-          <div>
-            <Script
-              id="chatling-embed-script"
-              strategy="afterInteractive"
-              src="https://chatling.ai/js/embed.js"
-              async
-              data-id="8414771916"
-            />
-          </div>
-      </div>
-    </main>
+    <div className="h-10">
+      <p>asd</p>
+    </div>
   )
 }
 
