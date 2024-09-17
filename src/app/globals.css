@@ -59,6 +59,27 @@
   }
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1F1D2B;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ABBBC2;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 @layer base {
   * {
     @apply border-border;
