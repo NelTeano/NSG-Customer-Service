@@ -273,7 +273,11 @@ const Page: NextPage = ({}) => {
                   {menuInventory
                     .filter(menu => menu.category === categories) // Filter based on the current category
                     .map((menus, index) => (
-                      <MenuCard key={index} name={menus.name} />
+                      <MenuCard 
+                        key={index} 
+                        name={menus.name} 
+                        subCategory={menus.subCategory}
+                      />
                     ))
                   }
                 </TabsContent>
@@ -300,7 +304,7 @@ const Page: NextPage = ({}) => {
                 </div>
               </div>
               <Separator className="my-4" />
-            <div className='flex flex-col gap-6 h-[350px] border-b pb-4 border-Light w-full bg-transparent overflow-hidden overflow-y-scroll'>
+            <div className='flex flex-col gap-6 h-[350px] border-b pb-4 pt-2 border-Light w-full bg-transparent overflow-hidden overflow-y-scroll'>
                 {[0,1,2,3,4,5,6,7,8,9].map((item, index) => (
                   <ItemCard key={index} />
                 ))}
