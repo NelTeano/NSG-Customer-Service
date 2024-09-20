@@ -298,7 +298,7 @@ const Page: NextPage = ({}) => {
             <div className='flex flex-col'>
               <div className='flex flex-row justify-between text-white text-sm'>
                 <p>Item</p>
-                <div className='flex flex-row gap-8'>
+                <div className='flex flex-row gap-10'>
                   <p>Qty</p>
                   <p>Price</p>
                 </div>
@@ -356,8 +356,9 @@ const ItemCard: React.FC = (props): JSX.Element => {
               <p className='text-Light' >₱ 70</p>
             </div>
             <Input 
-              className='h-12 w-12 bg-BaseBg border border-[#393C49] text-white text-center'
+              className='h-12 w-12 bg-BaseBg border border-[#393C49] text-white text-center disabled:opacity-100  disabled:cursor-not-allowed'
               defaultValue={1}
+              disabled
             />
           </div>
           <Input 
