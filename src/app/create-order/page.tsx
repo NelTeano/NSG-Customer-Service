@@ -266,7 +266,7 @@ const Page: NextPage = ({}) => {
       <div className='flex flex-row h-auto min-h-[1000px] bg-BaseBg'>
         <div className='flex flex-col gap-10 w-full bg-BaseBg p-4'>
           <div>
-            <HeaderBanner />
+            <HeaderBanner headerTag='Create Order' />
           </div>
             <Tabs defaultValue="Main Dishes" className="relative w-full">
               <TabsList className="w-full justify-start rounded-none bg-transparent p-0 mb-4">

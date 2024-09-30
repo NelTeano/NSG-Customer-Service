@@ -14,13 +14,17 @@ const getFormattedDate = (): string => {
     return date.toLocaleDateString('en-PH', options); // 'en-PH' for Philippines locale
   };
 
-const Header: React.FC = () => {
+  interface Header {  
+    headerTag: string
+  }
+
+const Header: React.FC<Header> = (props): JSX.Element => {
 
     const DateToday = getFormattedDate();
 
     return (
         <div className='flex flex-col w-full'>
-            <p className='text-white text-lg'>Create Order</p>
+            <p className='text-white text-lg'>{props.headerTag}</p>
             <p className='text-Light text-sm'>{DateToday}</p>
         </div>
     )
