@@ -49,7 +49,6 @@ const MenuCard: React.FC<MenuDetails> = (props): JSX.Element => {
     };
 
     const handleSubmit = (name: string, option: string, quantity: number, price: number) => {
-        // console.log(`${name} ${option}  added with quantity: ${quantity} total price: ${price * quantity}`);
         setOrder({
             name: name,        
             option: option,

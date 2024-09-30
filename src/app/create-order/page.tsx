@@ -1,22 +1,30 @@
 'use client'
-import React, { Component, useState } from 'react'
+import React, { Component, useCallback, useEffect, useState } from 'react'
 
 // COMPONENTS
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import HeaderBanner from '@/components/headerbanner/Header'
+import HeaderBanner from '@/components/headerBanner/Header'
 import MenuCard from '@/components/MenuCard/MenuCard'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
-import {
-  Trash
-} from "lucide-react"
-
 import { NextPage } from 'next'
+import ItemCard from '@/components/ItemCard/ItemCard'
+
+
 
 interface Order {
-  name: string;  
   diningOption: string; 
+  orders: orderObject[],
+  receive: number,
+  overall_total: number,
+}
+
+interface orderObject {
+  menu_name: string,
+  option: string ,
+  quantity: number,
+  price: number,
 }
 
 const menuInventory = [
@@ -234,16 +242,25 @@ const menuInventory = [
 const Page: NextPage = ({}) => {
 
   const [order, setOrder] = useState<Order>({
-    name: '',        
-    diningOption: ''  
+    diningOption: '',
+    orders: [],
+    receive: 0,
+    overall_total: 0,
   });
-  
+  const [selectedPackageType, setPackageType] = useState('Dine In');
   
   const Categories = ['Main Dishes', 'Snacks', 'Drinks', 'Addons'];
   const packageType = ['Dine In', 'Take out', 'Delivery'];  
+
   
 
-    
+  const handlePackageType = useCallback((selected: string) => {
+    setPackageType(selected);
+  }, []);
+  
+  console.log(selectedPackageType)
+  console.log("Order Summary", order)
+
 
     return (
       <div className='flex flex-row h-auto min-h-[1000px] bg-BaseBg'>
@@ -291,9 +308,16 @@ const Page: NextPage = ({}) => {
               </p>
             </div>
             <div className='flex gap-2'>
-                {packageType.map((type, index) => (
-                  <Button key={index} className='text-primaryOrange bg-transparent border border-Light h-10 w-17 text-sm p-2'>{type}</Button>
-                ))}
+              {packageType.map((type, index) => (
+                <div
+                  key={index}
+                  className={`text-primaryOrange border rounded-sm border-Light h-10 w-17 text-sm p-2 
+                    ${selectedPackageType === type ? 'bg-primaryOrange text-white' : 'bg-transparent'}`}
+                  onClick={() => handlePackageType(type)}
+                >
+                  {type}
+                </div>
+              ))}
             </div>
             <div className='flex flex-col'>
               <div className='flex flex-row justify-between text-white text-sm'>
@@ -306,7 +330,7 @@ const Page: NextPage = ({}) => {
               <Separator className="my-4" />
             <div className='flex flex-col gap-6 h-[350px] border-b pb-4 pt-2 border-Light w-full bg-transparent overflow-hidden overflow-y-scroll'>
                 {[0,1,2,3,4,5,6,7,8,9].map((item, index) => (
-                  <ItemCard key={index} />
+                  <ItemCard key={index} item_price={200} name='Shawarma' price={100} quantity={2} />
                 ))}
             </div>
             <div className='flex flex-row justify-between items-center text-sm mt-2 gap-8'>
@@ -345,34 +369,4 @@ const Page: NextPage = ({}) => {
 export default Page;
 
 
-const ItemCard: React.FC = (props): JSX.Element => {
-
-    return (
-      <div className='flex flex-row justify-between w-full h-[110px] gap-4 bg-DarkBg border-none'>
-        <div className='flex flex-col w-full justify-between gap-2'>
-          <div className='flex flex-row justify-between text-white text-sm'>
-            <div>
-              <p>Shawarma Rice</p>
-              <p className='text-Light' >₱ 70</p>
-            </div>
-            <Input 
-              className='h-12 w-12 bg-BaseBg border border-[#393C49] text-white text-center disabled:opacity-100  disabled:cursor-not-allowed'
-              defaultValue={1}
-              disabled
-            />
-          </div>
-          <Input 
-              className='h-12 bg-BaseBg border border-[#393C49] text-Lighter placeholder:text-Light text-left' 
-              placeholder='Order Note...'
-            />
-        </div>
-        <div className='flex flex-col justify-between text-white'>
-          <p className='text-right'>5000</p>
-          <Button className='h-12 w-13 text-lg text-primaryOrange border border-primaryOrange bg-transparent'>
-              <Trash className='h-13 w-13' />
-          </Button>
-        </div>
-      </div>
-    )
-}
 
