@@ -3,7 +3,23 @@ import React from 'react'
 
 // COMPONENTS
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { 
+  Tabs, 
+  TabsContent, 
+  TabsList, 
+  TabsTrigger 
+} from "@/components/ui/tabs"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+  DialogFooter,
+  DialogDescription
+} from "@/components/ui/dialog"
+
 import {
   Card,
   CardContent,
@@ -19,7 +35,18 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
 import { Separator } from '@/components/ui/separator'
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
 import HeaderBanner from '@/components/headerBanner/Header'
 
@@ -28,7 +55,8 @@ import {
   PhilippinePeso,
   Users,
   HandPlatter,
-  ChartLine
+  ChartLine,
+  Logs
 } from "lucide-react"
 
 import { RadialBar, RadialBarChart } from "recharts"
@@ -41,6 +69,9 @@ import {
 
 // LIB
 import { numberWithCommas } from '@/lib/NumberWithCommas'
+import { Button } from '@/components/ui/button'
+
+
 
 export default function Page(){
 
@@ -125,6 +156,96 @@ const Overview = () => {
     },
   ];
 
+  const OrdersMockData = [
+    {
+      "_id": "66e6441e33ef94e12cd69446",
+      "order_list": [
+        {
+          "product_name": "sisig",
+          "qty": 1,
+          "price": 100
+        },
+        {
+          "product_name": "shawarma",
+          "qty": 2,
+          "price": 50
+        }
+      ],
+      "addons": [
+        {
+          "product_name": "rice",
+          "qty": 2,
+          "price": 10
+        }
+      ],
+      "order_method": "Dine In",
+      "status": false,
+      "total": 1000,
+      "createdAt": "2024-09-15T10:19:10.172Z",
+      "updatedAt": "2024-09-15T10:19:10.172Z",
+      "order_id": 1,
+      "__v": 0
+    },
+    {
+      "_id": "66e6442e33ef94e12cd69449",
+      "order_list": [
+        {
+          "product_name": "hotdog",
+          "qty": 1,
+          "price": 100
+        },
+        {
+          "product_name": "sisig",
+          "qty": 2,
+          "price": 50
+        }
+      ],
+      "addons": [
+        {
+          "product_name": "rice",
+          "qty": 2,
+          "price": 10
+        }
+      ],
+      "order_method": "Take Out",
+      "status": false,
+      "total": 1000,
+      "createdAt": "2024-09-15T10:19:26.926Z",
+      "updatedAt": "2024-09-15T10:19:26.926Z",
+      "order_id": 2,
+      "__v": 0
+    },
+    {
+      "_id": "66e6442e33ef94e12cd69449",
+      "order_list": [
+        {
+          "product_name": "hotdog",
+          "qty": 1,
+          "price": 100
+        },
+        {
+          "product_name": "sisig",
+          "qty": 2,
+          "price": 50
+        }
+      ],
+      "addons": [
+        {
+          "product_name": "rice",
+          "qty": 2,
+          "price": 10
+        }
+      ],
+      "order_method": "Delivery",
+      "status": true,
+      "total": 1000,
+      "createdAt": "2024-09-15T10:19:26.926Z",
+      "updatedAt": "2024-09-15T10:19:26.926Z",
+      "order_id": 2,
+      "__v": 0
+    }
+  ]
+
   const combinedMockData = React.useMemo(() => {
     return CardsCategories.map((category, index) => ({
       ...category,
@@ -133,27 +254,23 @@ const Overview = () => {
   }, [CardsCategories, CardsMockData]);
 
   const chartData = [
-    { browser: "chrome", visitors: 275, fill: "#65B0F6" },
-    { browser: "safari", visitors: 200, fill: "#FFB572" },
-    { browser: "firefox", visitors: 187, fill: "#FF7CA3" },
-    { visitors: 0, fill: "#FF7CA3" },
-
+    { order_method: "", label: "", count: 0, fill: "" },
+    { order_method: "dineIn", label: "Dine In", count: 275, fill: "#65B0F6" },
+    { order_method: "takeOut", label: "Take Out", count: 200, fill: "#FFB572" },
+    { order_method: "delivery", label: "Delivery", count: 187, fill: "#FF7CA3" },
   ]
   
   const chartConfig = {
-    chrome: {
-      label: "Chrome",
+    dineIn: {
+      label: "Dine In",
       color: "#65B0F6",
     },
-    safari: {
-      label: "Safari",
+    takeOut: {
+      label: "Take Out",
       color: "#FFB572",
     },
-    firefox: {
-      label: "Firefox",
-      color: "#FF7CA3",
-    },
-    blank: {
+    delivery: {
+      label: "Delivery",
       color: "#FF7CA3",
     },
   } satisfies ChartConfig  
@@ -192,11 +309,57 @@ const Overview = () => {
           </Card>
         ))}
       </section>
-      <div className='flex flex-row h-auto min-h-[1000px] gap-2 bg-BaseBg'>
-        <section className='flex flex-col w-full bg-DarkBg'>
-            This is dashboard page 1 
+      <div className='flex flex-row h-auto min-h-[1400px] gap-2 bg-BaseBg'>
+        <section className='flex flex-col w-full h-auto max-h-[350px] bg-transparent p-4 gap-2'>
+          <p className='text-white text-lg'>Recent Orders</p>
+          <Table>
+            <TableHeader>
+              <TableRow className='border-b border-Light'>
+                <TableHead className="text-left text-white text-sm">Order #</TableHead>
+                <TableHead className="text-left text-white text-sm">Status</TableHead>
+                <TableHead className="text-left text-white text-sm">Method</TableHead>
+                <TableHead className="text-left text-white text-sm">Total Payment</TableHead>
+                <TableHead className="text-left text-white text-sm w-[100px]">Summary</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className='text-Light'>
+              {OrdersMockData.map((recent_order, index) => (
+                <TableRow 
+                  key={index} 
+                  className='border-0'
+                >
+                  <TableCell className="font-medium">{recent_order.order_id}</TableCell>
+                  {recent_order.status == false ? (<TableCell className="font-medium">Pending</TableCell>) : ((<TableCell className="font-medium">Completed</TableCell>))}
+                  <TableCell>{recent_order.order_method}</TableCell>
+                  <TableCell>₱{recent_order.total}</TableCell>
+                  <TableCell>
+                    <Dialog>
+                      <DialogTrigger>
+                        <VisuallyHidden>
+                            <DialogTitle>Recent Order {recent_order._id}</DialogTitle>
+                            <DialogDescription>This is {recent_order._id} Recent Orders Card</DialogDescription>
+                        </VisuallyHidden>
+                        <div className='flex items-center justify-center w-[70px] h-[30px] bg-BaseBg rounded'>
+                          <Logs className='h-4 w-4 text-white' />
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent>
+                        {recent_order.order_list.map((orders, index) => (
+                          <div key={index}>
+                            <p>Product Name:  {orders.product_name}</p>
+                            <p>Quantity: {orders.qty}</p>
+                            <p>Price : {orders.price}</p>
+                          </div>
+                        ))}
+                      </DialogContent>
+                    </Dialog>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </section>
-        <section className='flex flex-col w-[500px] h-auto bg-BaseBg'> 
+        <section className='flex flex-col w-[550px] h-auto bg-BaseBg'> 
             <div className='flex flex-col w-full h-[350px] bg-DarkBg p-4 gap-4 rounded-lg '>
               <div className='flex flex-row justify-between'>
                 <p className='text-white text-lg'>Most Ordered</p>
@@ -212,27 +375,50 @@ const Overview = () => {
                 </Select>
               </div>
               < Separator />
-              <ChartContainer
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-[250px]"
-                style={{ width: '100%', height: '100%', minHeight: '200px' }} // Ensure proper height
-              >
-                <RadialBarChart data={chartData} innerRadius={30} outerRadius={110}>
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel nameKey="browser" />}
-                  />
-                  <RadialBar 
-                    background={{ 
-                      fill: "#252836",
-                      opacity: 0.2
-                    }}
-                    dataKey="visitors"
-                    cornerRadius={10}
-                     
+              <div className='flex flex-row gap-4'>
+                 <ChartContainer
+                  config={chartConfig}
+                  className="mx-auto aspect-square max-h-[250px]"
+                  style={{ width: '100%', height: '100%', minHeight: '200px' }} // Ensure proper height
+                >
+                  <RadialBarChart data={chartData} innerRadius={30} outerRadius={110}>
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent hideLabel nameKey="order_method" />}
                     />
-                </RadialBarChart>
-              </ChartContainer>
+                    <RadialBar 
+                      background={{ 
+                        fill: "#252836",
+                        opacity: 0.2
+                      }}
+                      maxBarSize={12}
+                      dataKey="count"
+                      cornerRadius={10}
+                      
+                    />
+                  </RadialBarChart>
+                </ChartContainer> 
+                  <section className='flex flex-col w-full justify-center gap-2'>
+                    {chartData.map((data, index) => (
+                      index === 0 ? null : (
+                        <div 
+                          key={index} 
+                          className='flex flex-row gap-2'
+                        >
+                          <div 
+                            className="flex w-4 h-3 rounded-full" 
+                            style={{ backgroundColor: data.fill}}
+                          >
+                          </div>
+                          <div>
+                            <p className='text-white text-sm'>{data.label}</p>
+                            <p className='text-Light text-sm'>{data.count} Customers</p>
+                          </div>
+                        </div>
+                      )
+                    ))}
+                  </section>
+              </div>
             </div>            
         </section>
       </div>
