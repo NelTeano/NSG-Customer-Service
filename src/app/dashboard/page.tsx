@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/chart"
 
 // LIB
-import { numberWithCommas } from '@/lib/numberWithCommas'
+import { numberWithCommas } from '@/lib/NumberWithCommas'
 
 export default function Page(){
 
