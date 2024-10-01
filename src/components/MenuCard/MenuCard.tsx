@@ -26,8 +26,8 @@ interface MenuDetails {
 
 
 interface subCategory {
-    name: string,
-    price: number,
+    name: string | undefined,
+    price: number | undefined,
 }
 
 interface Order {
@@ -48,16 +48,17 @@ const MenuCard: React.FC<MenuDetails> = (props): JSX.Element => {
         }
     };
 
-    const handleSubmit = (name: string, option: string, quantity: number, price: number) => {
-        setOrder({
-            name: name,        
-            option: option,
-            quantity: quantity,
-            price: price * quantity,
-          });
-
-        setOpen(false);
-        setQuantity(1)
+    const handleSubmit = (name: string, option: string | undefined, quantity: number, price: number | undefined) => {
+        if (option && price) {  // Check if option and price are valid before proceeding
+            setOrder({
+                name: name,
+                option: option,
+                quantity: quantity,
+                price: price * quantity,
+            });
+            setOpen(false);
+            setQuantity(1);
+        }
     };
     console.log("Order Data to be submitted: ", order)
 
@@ -139,10 +140,10 @@ const MenuCard: React.FC<MenuDetails> = (props): JSX.Element => {
                                         <DialogClose asChild>
                                             <Button 
                                                 className="flex flex-row items-center justify-center text-white text-sm rounded-sm gap-2 h-[80px] w-[150px] bg-primaryOrange"
-                                                onClick={(() => handleSubmit(props.name, selectedOption.name, Quantity, selectedOption.price))}
+                                                onClick={() => selectedOption && handleSubmit(props.name, selectedOption.name, Quantity, selectedOption.price)}
                                             >
                                                 <p>Add Order</p> 
-                                                <SendHorizonal className="h-13 w-13 " />
+                                                <SendHorizonal className="h-13 w-13" />
                                             </Button>
                                         </DialogClose>
                                     </DialogContent>
