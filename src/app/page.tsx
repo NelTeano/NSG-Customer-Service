@@ -35,10 +35,10 @@ import {
   UserCog
 } from "lucide-react"
 
-async function getOrders() {
-	const orders = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_API_DOMAIN}/api/orders`);
-  return orders.data;
-}
+// async function getOrders() {
+// 	const orders = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_API_DOMAIN}/api/orders`);
+//   return orders.data;
+// }
 
 async function getInventory() {
   const inventory = await axios.get('../lib/mock/data/menuInventory.json');
@@ -54,10 +54,10 @@ interface Props {}
 const Page: NextPage<Props> = ({}) => {
   const { setTheme } = useTheme()
 
-  const { data: orders, error: ordersErr, isLoading: ordersLoading } = useQuery({
-      queryKey: ['orders'],  
-      queryFn: getOrders, 
-  });
+  // const { data: orders, error: ordersErr, isLoading: ordersLoading } = useQuery({
+  //     queryKey: ['orders'],  
+  //     queryFn: getOrders, 
+  // });
 
   
 
