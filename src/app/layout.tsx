@@ -28,10 +28,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{
-      elements: {
-        footer: "hidden",
-      },
+    <ClerkProvider 
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      signInFallbackRedirectUrl="/Home"
+      appearance={{
+        elements: {
+          footer: "hidden",
+        },
     }}>
       <html lang="en" suppressHydrationWarning={true}>
         <body className={noto_sans.className}>

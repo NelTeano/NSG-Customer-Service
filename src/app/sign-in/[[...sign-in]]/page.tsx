@@ -7,7 +7,7 @@ export default class page extends Component {
   render() {
     return (
         <div className='flex h-[500px] justify-center items-center bg-white'>
-          <SignIn />
+          <SignIn fallbackRedirectUrl="/Home" />
         </div>
     )
   }

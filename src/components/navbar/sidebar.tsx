@@ -23,7 +23,7 @@ const SideBar: NextPage<Props> = ({}) => {
         {
             icon: <HomeIcon color='#EA7C69'/>,
             name: "Home",
-            link: '/',
+            link: '/Home',
         },
         {
             icon: <LayoutDashboard color='#EA7C69' />,
