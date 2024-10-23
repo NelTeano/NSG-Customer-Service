@@ -74,7 +74,7 @@ async function getOrders() {
   return OrdersMockData
 }
 
-export default function page() {
+export default function Page() {
 
   
   const { data: orders, error: ordersErr, isLoading: ordersLoading } = useQuery({
