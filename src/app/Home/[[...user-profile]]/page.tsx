@@ -115,7 +115,7 @@ const Page: NextPage<Props> = ({}) => {
   return (
     <div className='flex flex-col gap-6 h-auto min-h-[1000px] bg-BaseBg p-4'>
       <Header headerTag="Home"/>
-        <Tabs defaultValue="Products">
+        <Tabs defaultValue="Products Management">
           <section className="flex flex-row gap-6">
             <div className="h-[585px] w-[275px] bg-DarkBg rounded-md">
               {TabSettings.map((tab, index) => (

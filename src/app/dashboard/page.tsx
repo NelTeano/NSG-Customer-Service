@@ -69,8 +69,7 @@ import {
 
 // LIB
 import { numberWithCommas } from '@/lib/NumberWithCommas'
-import { Button } from '@/components/ui/button'
-
+import { OrdersMockData, CardsMockData } from '@/lib/mockData'
 
 
 export default function Page(){
@@ -137,114 +136,6 @@ const Overview = () => {
     },
   ]
   
-  const CardsMockData = [
-    {   
-      overall_value: 45231.89,
-      past_difference: 20.1,
-    },
-    {   
-      overall_value: 2350,
-      past_difference: 180.1,
-    },
-    {   
-      overall_value: 12234,
-      past_difference: 19,
-    },
-    {   
-      overall_value: 573,
-      past_difference: 201,
-    },
-  ];
-
-  const OrdersMockData = [
-    {
-      "_id": "66e6441e33ef94e12cd69446",
-      "order_list": [
-        {
-          "product_name": "sisig",
-          "qty": 1,
-          "price": 100
-        },
-        {
-          "product_name": "shawarma",
-          "qty": 2,
-          "price": 50
-        }
-      ],
-      "addons": [
-        {
-          "product_name": "rice",
-          "qty": 2,
-          "price": 10
-        }
-      ],
-      "order_method": "Dine In",
-      "status": false,
-      "total": 1000,
-      "createdAt": "2024-09-15T10:19:10.172Z",
-      "updatedAt": "2024-09-15T10:19:10.172Z",
-      "order_id": 1,
-      "__v": 0
-    },
-    {
-      "_id": "66e6442e33ef94e12cd69449",
-      "order_list": [
-        {
-          "product_name": "hotdog",
-          "qty": 1,
-          "price": 100
-        },
-        {
-          "product_name": "sisig",
-          "qty": 2,
-          "price": 50
-        }
-      ],
-      "addons": [
-        {
-          "product_name": "rice",
-          "qty": 2,
-          "price": 10
-        }
-      ],
-      "order_method": "Take Out",
-      "status": false,
-      "total": 1000,
-      "createdAt": "2024-09-15T10:19:26.926Z",
-      "updatedAt": "2024-09-15T10:19:26.926Z",
-      "order_id": 2,
-      "__v": 0
-    },
-    {
-      "_id": "66e6442e33ef94e12cd69449",
-      "order_list": [
-        {
-          "product_name": "hotdog",
-          "qty": 1,
-          "price": 100
-        },
-        {
-          "product_name": "sisig",
-          "qty": 2,
-          "price": 50
-        }
-      ],
-      "addons": [
-        {
-          "product_name": "rice",
-          "qty": 2,
-          "price": 10
-        }
-      ],
-      "order_method": "Delivery",
-      "status": true,
-      "total": 1000,
-      "createdAt": "2024-09-15T10:19:26.926Z",
-      "updatedAt": "2024-09-15T10:19:26.926Z",
-      "order_id": 2,
-      "__v": 0
-    }
-  ]
 
   const combinedMockData = React.useMemo(() => {
     return CardsCategories.map((category, index) => ({

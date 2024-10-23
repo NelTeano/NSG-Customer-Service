@@ -11,6 +11,8 @@ import { ClerkProvider } from '@clerk/nextjs'
 
 // COMPONENTS
 import SideBar from "@/components/navbar/sidebar";
+import { Toaster } from "@/components/ui/sonner"
+
 
 
 const noto_sans = Noto_Sans({ subsets: ["latin"] });
@@ -46,11 +48,12 @@ export default function RootLayout({
               disableTransitionOnChange
             >
             <SideBar/>
-            <main className="flex flex-col bg-slate-200 h-full w-full text-black ">
+            <main className="flex flex-col bg-BaseBg h-full w-full text-black ">
               <div className="flex flex-col h-auto ml-[100px]">
                 {children}
               </div> 
             </main>
+            <Toaster />
           </ThemeProvider>
         </QueryClientProvider>
         </body>
