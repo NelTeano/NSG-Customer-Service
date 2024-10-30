@@ -1,4 +1,8 @@
+'use client'
 import { NextPage } from 'next'
+
+import { useAuth } from '@clerk/nextjs'
+
 import {
     HomeIcon,
     Grid2X2,
@@ -18,6 +22,8 @@ import { SignOutButton } from '@clerk/nextjs'
 interface Props {}
 
 const SideBar: NextPage<Props> = ({}) => {
+
+    const { isSignedIn } = useAuth();
 
     const navOptions = [
         {
@@ -72,11 +78,13 @@ const SideBar: NextPage<Props> = ({}) => {
                         </Link>
                 ))}
             </div>
-            <div className='mb-10'>
-                <SignOutButton>
-                    <LogOutIcon color='#EA7C69'/>
-                </SignOutButton>
-            </div>
+                <div className='mb-10'>
+            { isSignedIn && 
+                    <SignOutButton>
+                        <LogOutIcon color='#EA7C69'/>
+                    </SignOutButton>
+            }
+                </div>
         </div>
     )
 }

@@ -278,9 +278,14 @@ import next from "next";
 
 
 import React from 'react'
+import Loader from "@/components/loader/Loader";
 
 export default function page() {
   return (
-    <div>page</div>
+    <>
+        <div className="min-h-[1000px] w-full flex flex-col justify-center items-center">
+            Testing page
+        </div>
+    </>
   )
 }

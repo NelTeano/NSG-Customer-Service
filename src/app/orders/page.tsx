@@ -91,7 +91,7 @@ export default function Page() {
   }, [ordersLoading, orders]);
   
   console.log("orders data:", orders);
-
+  
 
   return (
     <div className='flex flex-row gap-10 justify-between h-full min-h-[1000px] w-full bg-BaseBg'>
